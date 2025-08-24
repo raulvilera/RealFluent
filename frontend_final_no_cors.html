@@ -1,1402 +1,1963 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Registro de Ocorrências Escolares</title>
+    <title>RealFluent - Plataforma de Ensino de Inglês</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4CAF50;
-            --primary-light: #80e27e;
-            --primary-dark: #087f23;
-            --secondary-color: #2196F3;
-            --secondary-light: #6ec6ff;
-            --secondary-dark: #0069c0;
-            --accent-color: #FF9800;
-            --accent-light: #ffc947;
-            --accent-dark: #c66900;
-            --text-on-primary: #ffffff;
-            --text-on-secondary: #ffffff;
-            --text-on-accent: #000000;
-            --error-color: #F44336;
-            --warning-color: #FFC107;
-            --info-color: #2196F3;
-            --success-color: #4CAF50;
-            --background-color: #f5f5f5;
-            --card-color: #ffffff;
-            --border-radius: 8px;
-            --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #ffbe0b;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --card-bg: #ffffff;
+            --hover-effect: all 0.3s ease;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--background-color);
-            color: #333;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: #f5f7ff;
             line-height: 1.6;
         }
 
-        .header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .header-icon {
-            background-color: rgba(255, 255, 255, 0.2);
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--hover-effect);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--hover-effect);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-outline {
+            border: 2px solid white;
+            color: white;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        /* Hero Carousel */
+        .hero-carousel {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(67, 97, 238, 0.8), rgba(58, 12, 163, 0.8));
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .slide-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+            z-index: 2;
+        }
+
+        .carousel-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
             width: 50px;
             height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--hover-effect);
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--hover-effect);
+        }
+
+        .indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* Courses Section */
+        .courses {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--hover-effect);
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .course-content {
+            padding: 25px;
+        }
+
+        .course-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .course-details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .access-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
+            background: var(--primary);
+            color: white;
+        }
+
+        .access-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: #f5f7ff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--hover-effect);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
         }
 
-        .header-text h1 {
-            font-size: 24px;
-            margin-bottom: 4px;
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
         }
 
-        .header-text p {
-            font-size: 14px;
-            opacity: 0.9;
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: var(--spacing-lg);
+        .footer-content {
             display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: var(--spacing-lg);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
-        .status-bar {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--hover-effect);
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: var(--spacing-md);
+            justify-content: center;
+            transition: var(--hover-effect);
         }
 
-        .status-bar .status-icon {
-            color: var(--primary-color);
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
         }
 
-        .status-bar .status-text {
-            font-weight: 500;
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
 
-        .status-bar .status-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-            margin-right: var(--spacing-xs);
-            display: inline-block;
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .slide-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
         }
 
-        .card {
-            background-color: var(--card-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: var(--spacing-lg);
+        @media (max-width: 768px) {
+            .slide-content h1 {
+                font-size: 2rem;
+            }
+            
+            .slide-content p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-card, .course-card {
+                padding: 20px;
+            }
+            
+            .hero-carousel {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero-carousel {
+                height: 350px;
+            }
+            
+            .features, .courses {
+                padding: 60px 0;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Video Player */
+        .video-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: var(--dark);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transition: var(--hover-effect);
+        }
+
+        .video-header {
+            background: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-header h3 {
+            font-size: 1rem;
+        }
+
+        .video-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .video-content {
+            padding: 15px;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 170px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border-radius: 8px;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+            display: flex;
             overflow: hidden;
         }
 
-        .card-header {
-            background-color: var(--secondary-color);
-            color: var(--text-on-secondary);
-            padding: var(--spacing-md);
+        .lang-btn {
+            padding: 10px 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
             font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
+            transition: var(--hover-effect);
         }
 
-        .card-header i {
-            font-size: 20px;
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
         }
 
-        .card-body {
-            padding: var(--spacing-lg);
+        /* Firebase Config Section (Admin Only) */
+        .admin-section {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin: 40px 0;
+        }
+
+        .admin-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: var(--spacing-lg);
-            position: relative;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: var(--spacing-xs);
+            margin-bottom: 8px;
             font-weight: 500;
-            color: #555;
         }
 
-        .form-group label.required::after {
-            content: "*";
-            color: var(--error-color);
-            margin-left: 4px;
-        }
-
-        .form-control {
+        .form-group input {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 15px;
             border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            transition: var(--transition);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
-        }
-
-        .form-control.error {
-            border-color: var(--error-color);
-        }
-
-        .form-error {
-            color: var(--error-color);
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-md);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            margin-right: var(--spacing-sm);
-            width: 18px;
-            height: 18px;
-        }
-
-        .checkbox-group label {
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .btn {
-            padding: 10px 16px;
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--spacing-sm);
-        }
-
-        .btn-primary {
-            background-color: var(--secondary-color);
-            color: var(--text-on-secondary);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--secondary-dark);
-        }
-
-        .btn-secondary {
-            background-color: #f0f0f0;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background-color: #e0e0e0;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: var(--spacing-md);
-        }
-
-        .stats-card {
-            background-color: var(--primary-color);
-            color: var(--text-on-primary);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .stats-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .stats-card-title {
-            font-size: 18px;
-            font-weight: 500;
-        }
-
-        .stats-card-icon {
-            font-size: 24px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: var(--spacing-md);
-        }
-
-        .stats-item {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-md);
-            text-align: center;
-        }
-
-        .stats-value {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .stats-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .period-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: var(--spacing-md);
-        }
-
-        .period-item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .period-value {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .period-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .alert {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-md);
-            border-radius: var(--border-radius);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .alert-info {
-            background-color: rgba(33, 150, 243, 0.1);
-            color: var(--info-color);
-        }
-
-        .alert-warning {
-            background-color: rgba(255, 193, 7, 0.1);
-            color: var(--warning-color);
-        }
-
-        .alert-error {
-            background-color: rgba(244, 67, 54, 0.1);
-            color: var(--error-color);
-        }
-
-        .alert-success {
-            background-color: rgba(76, 175, 80, 0.1);
-            color: var(--success-color);
-        }
-
-        .section-title {
-            margin-bottom: var(--spacing-md);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            color: #555;
-        }
-
-        .section-title i {
-            color: var(--secondary-color);
-        }
-
-        .irregularity-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-md);
-        }
-
-        .irregularity-item {
-            background-color: #f9f9f9;
-            border-radius: var(--border-radius);
-            padding: var(--spacing-md);
-            display: flex;
-            align-items: center;
-        }
-
-        .irregularity-item .checkbox-group {
-            margin-bottom: 0;
-        }
-
-        .irregularity-count {
-            margin-left: auto;
-            background-color: #eee;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .textarea-control {
-            width: 100%;
-            padding: var(--spacing-md);
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            min-height: 120px;
-            resize: vertical;
-            transition: var(--transition);
-        }
-
-        .textarea-control:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
-        }
-
-        .select-wrapper {
-            position: relative;
-        }
-
-        .select-wrapper::after {
-            content: "▼";
-            font-size: 12px;
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: #777;
-        }
-
-        select.form-control {
-            appearance: none;
-            padding-right: 30px;
-        }
-
-        .date-input {
-            position: relative;
-        }
-
-        .date-input input {
-            padding-right: 30px;
-        }
-
-        .date-input::after {
-            content: "📅";
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            font-size: 16px;
-        }
-
-        /* Alunos por período cards */
-        .period-card {
-            background-color: var(--card-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: var(--spacing-lg);
-            overflow: hidden;
-            text-align: center;
-            padding: var(--spacing-md);
-        }
-
-        .period-card-morning {
-            background-color: var(--secondary-color);
-            color: var(--text-on-secondary);
-        }
-
-        .period-card-afternoon {
-            background-color: var(--accent-color);
-            color: var(--text-on-accent);
-        }
-
-        .period-card-night {
-            background-color: #673AB7;
+        /* Demo Admin Button */
+        .demo-admin-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary);
             color: white;
-        }
-
-        .period-card-icon {
-            font-size: 24px;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .period-card-title {
-            font-size: 16px;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .period-card-value {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .period-card-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* Últimos Registros */
-        .recent-records {
-            background-color: var(--card-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: var(--spacing-lg);
-            overflow: hidden;
-        }
-
-        .recent-records-header {
-            background-color: var(--secondary-color);
-            color: var(--text-on-secondary);
-            padding: var(--spacing-md);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .recent-records-title {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            font-family: 'Poppins', sans-serif;
             font-weight: 500;
+            transition: var(--hover-effect);
         }
 
-        .recent-records-body {
-            padding: var(--spacing-md);
-            max-height: 300px;
-            overflow-y: auto;
+        .demo-admin-btn:hover {
+            background: var(--secondary);
         }
 
-        .recent-records-empty {
-            text-align: center;
-            padding: var(--spacing-lg);
-            color: #777;
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
         }
 
-        .recent-records-table {
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        /* Exercise Styles */
+        .exercise {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .exercise h4 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .exercise-input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Lesson Content Styles */
+        .lesson-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 30px 0;
+        }
+
+        .lesson-content h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .lesson-content p {
+            margin-bottom: 15px;
+        }
+
+        .lesson-content ul, .lesson-content ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .lesson-content table {
             width: 100%;
             border-collapse: collapse;
+            margin: 20px 0;
         }
 
-        .recent-records-table th,
-        .recent-records-table td {
-            padding: var(--spacing-sm);
+        .lesson-content table, .lesson-content th, .lesson-content td {
+            border: 1px solid #ddd;
+        }
+
+        .lesson-content th, .lesson-content td {
+            padding: 10px;
             text-align: left;
+        }
+
+        .lesson-content th {
+            background-color: #f2f2f2;
+        }
+
+        /* Tabs for Course Content */
+        .tabs {
+            margin-top: 30px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: var(--hover-effect);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Content cards */
+        .content-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .module-list {
+            list-style-type: none;
+        }
+
+        .module-list li {
+            padding: 10px 0;
             border-bottom: 1px solid #eee;
         }
 
-        .recent-records-table th {
-            font-weight: 500;
-            color: #555;
-        }
-
-        .recent-records-table tr:last-child td {
+        .module-list li:last-child {
             border-bottom: none;
         }
 
-        .student-stats {
-            background-color: var(--card-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: var(--spacing-lg);
-            overflow: hidden;
-            padding: var(--spacing-lg);
-            text-align: center;
+        .module-list li i {
+            margin-right: 10px;
+            color: var(--primary);
         }
 
-        .student-stats-name {
-            font-size: 18px;
+        /* Signup Modal Styles */
+        .signup-form {
+            margin-top: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-field {
+            flex: 1;
+            margin-bottom: 15px;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: 500;
-            margin-bottom: var(--spacing-md);
         }
 
-        .student-stats-value {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: var(--spacing-xs);
-            color: var(--secondary-color);
+        .form-field input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .student-stats-label {
-            font-size: 14px;
-            color: #777;
+        .form-field input:focus {
+            border-color: var(--primary);
+            outline: none;
         }
 
-        .class-stats {
-            background-color: var(--card-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: var(--spacing-lg);
-            overflow: hidden;
-            padding: var(--spacing-lg);
-            text-align: center;
-        }
-
-        .class-stats-value {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: var(--spacing-xs);
-            color: var(--secondary-color);
-        }
-
-        .class-stats-label {
-            font-size: 14px;
-            color: #777;
-        }
-
-        .class-stats-period {
-            margin-top: var(--spacing-sm);
+        .form-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
             font-weight: 500;
-            color: var(--primary-color);
+            transition: var(--hover-effect);
         }
 
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-                padding: var(--spacing-md);
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .irregularity-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .period-stats {
-                flex-direction: column;
-                gap: var(--spacing-md);
-            }
+        .form-submit:hover {
+            background: var(--secondary);
         }
 
-        /* Spinner de carregamento */
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 200px;
-            background-color: #333;
-            color: #fff;
+        /* Course Details Button */
+        .details-btn {
+            display: none;
+            width: 100%;
             text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
+            margin-top: 15px;
+            background: var(--accent);
+            color: white;
         }
 
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
+        .details-btn:hover {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-icon">📝</div>
-        <div class="header-text">
-            <h1>Registro de Ocorrências Escolares</h1>
-            <p>Sistema integrado com Google Sheets</p>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button class="lang-btn active" id="ptBtn">PT</button>
+        <button class="lang-btn" id="enBtn">EN</button>
+    </div>
+
+    <!-- Video Player (Wondershare Integration) -->
+    <div class="video-player">
+        <div class="video-header">
+            <h3 data-translate="live-class">Aula ao Vivo</h3>
+            <button class="video-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="video-content">
+            <div class="video-placeholder">
+                <i class="fas fa-play-circle" style="font-size: 2rem;"></i>
+            </div>
         </div>
     </div>
 
-    <div class="status-bar">
-        <span class="status-icon">🔌</span>
-        <span class="status-text">Status de integração:</span>
-        <span class="status-indicator"></span>
-        <span>Conectado à planilha Google Sheets</span>
-    </div>
+    <!-- Demo Admin Button -->
+    <button class="demo-admin-btn" id="demoAdminBtn" data-translate="teacher-area">Área do Professor</button>
 
-    <div class="container">
-        <div class="main-content">
-            <div class="card">
-                <div class="card-header">
-                    <i>📋</i> Informações da Ocorrência
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span data-translate="site-name">RealFluent</span>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav>
+                <ul>
+                    <li><a href="#home" data-translate="nav-home">Início</a></li>
+                    <li><a href="#courses" data-translate="nav-courses">Cursos</a></li>
+                    <li><a href="#features" data-translate="nav-features">Recursos</a></li>
+                    <li><a href="#about" data-translate="nav-about">Sobre</a></li>
+                    <li><a href="#contact" data-translate="nav-contact">Contato</a></li>
+                </ul>
+            </nav>
+
+            <div class="auth-buttons">
+                <a href="#login" class="btn btn-outline" data-translate="nav-login">Entrar</a>
+                <a href="#signup" class="btn btn-primary" id="signupBtn" data-translate="nav-signup">Cadastrar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Carousel -->
+    <section class="hero-carousel" id="home">
+        <div class="carousel-slides">
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1351&q=80');">
+                <div class="slide-content">
+                    <h1 data-translate="hero-title-1">Aprenda Inglês de Forma Moderna e Eficiente</h1>
+                    <p data-translate="hero-desc-1">Nossa plataforma oferece cursos de inglês com tecnologia de ponta, materiais diversificados e suporte completo para seu aprendizado.</p>
+                    <a href="#courses" class="btn btn-primary" data-translate="hero-cta-1">Explorar Cursos</a>
                 </div>
-                <div class="card-body">
-                    <form id="occurrenceForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="teacherName" class="required">Nome do professor</label>
-                                <div class="select-wrapper">
-                                    <select id="teacherName" name="teacherName" class="form-control" required>
-                                        <option value="">Selecione seu nome</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="occurrenceDate" class="required">Data da ocorrência</label>
-                                <div class="date-input">
-                                    <input type="date" id="occurrenceDate" name="occurrenceDate" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="className" class="required">Turma</label>
-                                <div class="select-wrapper">
-                                    <select id="className" name="className" class="form-control" required>
-                                        <option value="">Selecione a turma</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="studentName" class="required">Nome do aluno</label>
-                                <div class="select-wrapper">
-                                    <select id="studentName" name="studentName" class="form-control" required>
-                                        <option value="">Selecione primeiro a turma</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="section-title">
-                            <i>⚠️</i> Irregularidades
-                        </div>
-
-                        <div class="form-group">
-                            <label for="irregularities">Selecione as irregularidades (opcional):</label>
-                            <div class="irregularity-grid" id="irregularitiesContainer">
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity1" name="irregularities" value="Não fez a lição">
-                                        <label for="irregularity1">Não fez a lição</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity2" name="irregularities" value="Não trouxe material">
-                                        <label for="irregularity2">Não trouxe material</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity3" name="irregularities" value="Fora do lugar durante a aula">
-                                        <label for="irregularity3">Fora do lugar durante a aula</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity4" name="irregularities" value="Chegou atrasado">
-                                        <label for="irregularity4">Chegou atrasado</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity5" name="irregularities" value="Circulando no corredor">
-                                        <label for="irregularity5">Circulando no corredor</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity6" name="irregularities" value="Uso de celular">
-                                        <label for="irregularity6">Uso de celular</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity7" name="irregularities" value="Conversa paralela">
-                                        <label for="irregularity7">Conversa paralela</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity8" name="irregularities" value="Desrespeito com o professor">
-                                        <label for="irregularity8">Desrespeito com o professor</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity9" name="irregularities" value="Desrespeito com o colega">
-                                        <label for="irregularity9">Desrespeito com o colega</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity10" name="irregularities" value="Danificou patrimônio escolar">
-                                        <label for="irregularity10">Danificou patrimônio escolar</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                                <div class="irregularity-item">
-                                    <div class="checkbox-group">
-                                        <input type="checkbox" id="irregularity11" name="irregularities" value="Outros">
-                                        <label for="irregularity11">Outros</label>
-                                    </div>
-                                    <span class="irregularity-count">0</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="section-title">
-                            <i>📝</i> Descrição Detalhada
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Descreva a ocorrência (obrigatório se "Outros" for selecionado):</label>
-                            <textarea id="description" name="description" class="textarea-control" placeholder="Forneça detalhes adicionais sobre a ocorrência..."></textarea>
-                        </div>
-
-                        <div class="btn-group">
-                            <button type="submit" class="btn btn-primary" id="submitBtn">
-                                <i>📤</i> Registrar Ocorrência
-                            </button>
-                            <button type="reset" class="btn btn-secondary">
-                                <i>🗑️</i> Limpar Formulário
-                            </button>
-                        </div>
-                    </form>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                <div class="slide-content">
+                    <h1 data-translate="hero-title-2">Metodologia Inovadora</h1>
+                    <p data-translate="hero-desc-2">Utilizamos as mais modernas técnicas de ensino para garantir que você atinja a fluência no idioma inglês.</p>
+                    <a href="#courses" class="btn btn-primary" data-translate="hero-cta-2">Conhecer Métodos</a>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                <div class="slide-content">
+                    <h1 data-translate="hero-title-3">Professores Qualificados</h1>
+                    <p data-translate="hero-desc-3">Nossa equipe de professores é altamente capacitada e experiente no ensino de inglês para estrangeiros.</p>
+                    <a href="#courses" class="btn btn-primary" data-translate="hero-cta-3">Ver Corpo Docente</a>
                 </div>
             </div>
         </div>
+        <div class="carousel-controls">
+            <button class="carousel-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="carousel-indicators">
+            <div class="indicator active" data-index="0"></div>
+            <div class="indicator" data-index="1"></div>
+            <div class="indicator" data-index="2"></div>
+        </div>
+    </section>
 
-        <div class="sidebar">
-            <div class="stats-card">
-                <div class="stats-card-header">
-                    <div class="stats-card-title">
-                        <i>📊</i> Estatísticas do Sistema
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-translate="courses-title">Nossos Cursos</h2>
+                <p data-translate="courses-desc">Escolha entre uma variedade de cursos de inglês para todos os níveis</p>
+            </div>
+
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3 data-translate="course-basic">Inglês Básico</h3>
+                        <p data-translate="course-basic-desc">Curso ideal para iniciantes que desejam aprender o fundamento da língua inglesa.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> <span data-translate="course-hours">40 horas</span></span>
+                            <span><i class="fas fa-user-graduate"></i> <span data-translate="course-students">120 alunos</span></span>
+                        </div>
+                        <div class="price">R$ 199,90</div>
+                        <a href="#" class="btn access-btn" data-translate="course-access" data-course="basic">Acessar</a>
+                        <a href="#" class="btn details-btn" data-translate="course-learn-more" data-course="basic">Saiba Mais</a>
+                        
+                        <div class="course-details" data-course="basic">
+                            <h4>Conteúdo do Curso</h4>
+                            <ul class="module-list">
+                                <li><i class="fas fa-check-circle"></i> Lição 1: Pronomes e Verbo To Be</li>
+                                <li><i class="fas fa-check-circle"></i> Lição 2: Formação de Perguntas</li>
+                                <li><i class="fas fa-check-circle"></i> Lição 3: Futuro com "Going To"</li>
+                                <li><i class="fas fa-check-circle"></i> Vocabulário Essencial</li>
+                                <li><i class="fas fa-check-circle"></i> Exercícios Práticos</li>
+                            </ul>
+                            
+                            <div class="lesson-content">
+                                <h3>Lição 1: Pronomes e Verbo To Be</h3>
+                                <p>Aprenda os pronomes pessoais e como usar o verbo to be em inglês.</p>
+                                
+                                <h4>Pronomes</h4>
+                                <table>
+                                    <tr>
+                                        <th>Inglês</th>
+                                        <th>Português</th>
+                                    </tr>
+                                    <tr>
+                                        <td>I</td>
+                                        <td>Eu</td>
+                                    </tr>
+                                    <tr>
+                                        <td>You</td>
+                                        <td>Você</td>
+                                    </tr>
+                                    <tr>
+                                        <td>We</td>
+                                        <td>Nós</td>
+                                    </tr>
+                                    <tr>
+                                        <td>He</td>
+                                        <td>Ele</td>
+                                    </tr>
+                                    <tr>
+                                        <td>She</td>
+                                        <td>Ela</td>
+                                    </tr>
+                                    <tr>
+                                        <td>It</td>
+                                        <td>Esta/Aquela/Etc.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>They</td>
+                                        <td>Eles/Elas</td>
+                                    </tr>
+                                </table>
+
+                                <h4>Verbo To Be</h4>
+                                <p>O verbo to be é um dos verbos mais importantes em inglês e significa "ser" ou "estar".</p>
+                                
+                                <table>
+                                    <tr>
+                                        <th>Pessoa</th>
+                                        <th>Conjugação</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1ª pessoa (I)</td>
+                                        <td>am</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2ª pessoa (You)</td>
+                                        <td>are</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3ª pessoa (He/She/It)</td>
+                                        <td>is</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Plural (You/We/They)</td>
+                                        <td>are</td>
+                                    </tr>
+                                </table>
+
+                                <div class="exercise">
+                                    <h4>Exercício 1: Complete as frases com a forma correta do verbo TO BE</h4>
+                                    <p>1. We ______ Brazilians.</p>
+                                    <input type="text" class="exercise-input" data-answer="are">
+                                    
+                                    <p>2. They ______ warm.</p>
+                                    <input type="text" class="exercise-input" data-answer="are">
+                                    
+                                    <p>3. I ______ happy.</p>
+                                    <input type="text" class="exercise-input" data-answer="am">
+                                    
+                                    <p>4. She ______ tall.</p>
+                                    <input type="text" class="exercise-input" data-answer="is">
+                                    
+                                    <p>5. Alex and Bruno ______ hungry.</p>
+                                    <input type="text" class="exercise-input" data-answer="are">
+                                    
+                                    <button class="submit-btn">Enviar Respostas</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="stats-grid">
-                    <div class="stats-item">
-                        <div class="stats-value" id="totalOccurrences">0</div>
-                        <div class="stats-label">Total de Ocorrências</div>
+
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-language"></i>
                     </div>
-                    <div class="stats-item">
-                        <div class="stats-value" id="totalTeachers">80</div>
-                        <div class="stats-label">Professores</div>
-                    </div>
-                    <div class="stats-item">
-                        <div class="stats-value" id="totalClasses">46</div>
-                        <div class="stats-label">Turmas</div>
+                    <div class="course-content">
+                        <h3 data-translate="course-intermediate">Inglês Intermediário</h3>
+                        <p data-translate="course-intermediate-desc">Para quem já tem conhecimentos básicos e quer avançar no aprendizado.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> <span data-translate="course-hours">60 horas</span></span>
+                            <span><i class="fas fa-user-graduate"></i> <span data-translate="course-students">85 alunos</span></span>
+                        </div>
+                        <div class="price">R$ 299,90</div>
+                        <a href="#" class="btn access-btn" data-translate="course-access" data-course="intermediate">Acessar</a>
+                        <a href="#" class="btn details-btn" data-translate="course-learn-more" data-course="intermediate">Saiba Mais</a>
+                        
+                        <div class="course-details" data-course="intermediate">
+                            <h4>Conteúdo do Curso</h4>
+                            <ul class="module-list">
+                                <li><i class="fas fa-check-circle"></i> Lição 4: Verbos de Ação e Perguntas com DO</li>
+                                <li><i class="fas fa-check-circle"></i> Lição 5: THERE e Pronomes Pessoais</li>
+                                <li><i class="fas fa-check-circle"></i> Lição 6: CAN (habilidade/permissão)</li>
+                                <li><i class="fas fa-check-circle"></i> Lição 7: Present Continuous</li>
+                                <li><i class="fas fa-check-circle"></i> Exercícios Avançados</li>
+                            </ul>
+                            
+                            <div class="lesson-content">
+                                <h3>Lição 4: Verbos de Ação e Perguntas com DO</h3>
+                                <p>Aprenda a usar verbos de ação e a formar perguntas com o verbo auxiliar DO.</p>
+                                
+                                <h4>Verbos de Ação</h4>
+                                <p>Verbos de ação descrevem atividades e ações. Diferentemente do verbo TO BE, eles precisam do auxiliar DO para formar perguntas.</p>
+                                
+                                <table>
+                                    <tr>
+                                        <th>Verbo</th>
+                                        <th>Passado</th>
+                                        <th>Particípio</th>
+                                        <th>Português</th>
+                                    </tr>
+                                    <tr>
+                                        <td>want</td>
+                                        <td>wanted</td>
+                                        <td>wanted</td>
+                                        <td>querer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>eat</td>
+                                        <td>ate</td>
+                                        <td>eaten</td>
+                                        <td>comer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>go</td>
+                                        <td>went</td>
+                                        <td>gone</td>
+                                        <td>ir</td>
+                                    </tr>
+                                </table>
+
+                                <h4>Perguntas com DO</h4>
+                                <p>Para verbos de ação, usamos DO/DOES para formar perguntas:</p>
+                                <p>Exemplo: Do you like coffee? (Você gosta de café?)</p>
+                                
+                                <div class="exercise">
+                                    <h4>Exercício: Complete as perguntas com DO ou DOES</h4>
+                                    <p>1. ______ you like coffee?</p>
+                                    <input type="text" class="exercise-input" data-answer="Do">
+                                    
+                                    <p>2. ______ she want to go to the mall?</p>
+                                    <input type="text" class="exercise-input" data-answer="Does">
+                                    
+                                    <p>3. ______ they eat vegetables?</p>
+                                    <input type="text" class="exercise-input" data-answer="Do">
+                                    
+                                    <p>4. ______ he have a car?</p>
+                                    <input type="text" class="exercise-input" data-answer="Does">
+                                    
+                                    <p>5. ______ we need to buy eggs?</p>
+                                    <input type="text" class="exercise-input" data-answer="Do">
+                                    
+                                    <button class="submit-btn">Enviar Respostas</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="period-stats">
-                    <div class="period-item">
-                        <div class="period-value" id="morningOccurrences">0</div>
-                        <div class="period-label">Manhã</div>
+
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <div class="period-item">
-                        <div class="period-value" id="afternoonOccurrences">0</div>
-                        <div class="period-label">Tarde</div>
-                    </div>
-                    <div class="period-item">
-                        <div class="period-value" id="nightOccurrences">0</div>
-                        <div class="period-label">Noite</div>
+                    <div class="course-content">
+                        <h3 data-translate="course-advanced">Inglês Avançado</h3>
+                        <p data-translate="course-advanced-desc">Perfeito para quem busca fluência e domínio completo do idioma.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> <span data-translate="course-hours">80 horas</span></span>
+                            <span><i class="fas fa-user-graduate"></i> <span data-translate="course-students">64 alunos</span></span>
+                        </div>
+                        <div class="price">R$ 399,90</div>
+                        <a href="#" class="btn access-btn" data-translate="course-access" data-course="advanced">Acessar</a>
+                        <a href="#" class="btn details-btn" data-translate="course-learn-more" data-course="advanced">Saiba Mais</a>
+                        
+                        <div class="course-details" data-course="advanced">
+                            <h4>Conteúdo do Curso</h4>
+                            <ul class="module-list">
+                                <li><i class="fas fa-check-circle"></i> Lição 8: Terceira Pessoa e Pronomes Demonstrativos</li>
+                                <li><i class="fas fa-check-circle"></i> Lição 9: Vocabulário de Família e Expressões</li>
+                                <li><i class="fas fa-check-circle"></i> Uso de ANY e SOME</li>
+                                <li><i class="fas fa-check-circle"></i> Estruturas Complexas</li>
+                                <li><i class="fas fa-check-circle"></i> Preparação para Conversação Fluente</li>
+                            </ul>
+                            
+                            <div class="lesson-content">
+                                <h3>Lição 8: Terceira Pessoa e Pronomes Demonstrativos</h3>
+                                <p>Aprenda as regras para a terceira pessoa singular e o uso de pronomes demonstrativos.</p>
+                                
+                                <h4>Terceira Pessoa Singular</h4>
+                                <p>Na terceira pessoa singular (he, she, it), os verbos recebem -s no final no presente simples:</p>
+                                <p>Exemplo: He works at McDonald's. (Ele trabalha no McDonald's)</p>
+                                
+                                <h4>Pronomes Demonstrativos</h4>
+                                <table>
+                                    <tr>
+                                        <th>Inglês</th>
+                                        <th>Português</th>
+                                        <th>Uso</th>
+                                    </tr>
+                                    <tr>
+                                        <td>this</td>
+                                        <td>este/esta</td>
+                                        <td>itens próximos (singular)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>that</td>
+                                        <td>aquele/aquela</td>
+                                        <td>itens distantes (singular)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>these</td>
+                                        <td>estes/estas</td>
+                                        <td>itens próximos (plural)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>those</td>
+                                        <td>aqueles/aquelas</td>
+                                        <td>itens distantes (plural)</td>
+                                    </tr>
+                                </table>
+
+                                <div class="exercise">
+                                    <h4>Exercício: Complete com THIS, THAT, THESE ou THOSE</h4>
+                                    <p>1. ______ man wants more food. (Este homem)</p>
+                                    <input type="text" class="exercise-input" data-answer="This">
+                                    
+                                    <p>2. ______ chair is comfortable. (Aquela cadeira)</p>
+                                    <input type="text" class="exercise-input" data-answer="That">
+                                    
+                                    <p>3. ______ dogs like carrots. (Estes cachorros)</p>
+                                    <input type="text" class="exercise-input" data-answer="These">
+                                    
+                                    <p>4. ______ men are fast. (Aqueles homens)</p>
+                                    <input type="text" class="exercise-input" data-answer="Those">
+                                    
+                                    <p>5. ______ is a good idea. (Isso)</p>
+                                    <input type="text" class="exercise-input" data-answer="This">
+                                    
+                                    <button class="submit-btn">Enviar Respostas</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Alunos por período - Manhã -->
-            <div class="period-card period-card-morning">
-                <div class="period-card-icon">☀️</div>
-                <div class="period-card-title">Alunos - Manhã</div>
-                <div class="period-card-value" id="morningStudents">0</div>
-                <div class="period-card-label">matriculados</div>
-            </div>
-
-            <!-- Alunos por período - Tarde -->
-            <div class="period-card period-card-afternoon">
-                <div class="period-card-icon">🌤️</div>
-                <div class="period-card-title">Alunos - Tarde</div>
-                <div class="period-card-value" id="afternoonStudents">0</div>
-                <div class="period-card-label">matriculados</div>
-            </div>
-
-            <!-- Alunos por período - Noite -->
-            <div class="period-card period-card-night">
-                <div class="period-card-icon">🌙</div>
-                <div class="period-card-title">Alunos - Noite</div>
-                <div class="period-card-value" id="nightStudents">0</div>
-                <div class="period-card-label">matriculados</div>
-            </div>
-
-            <!-- Últimos Registros -->
-            <div class="recent-records">
-                <div class="recent-records-header">
-                    <div class="recent-records-title">
-                        <i>🕒</i> Últimos Registros (<span id="recordCount">0</span>)
-                    </div>
-                    <button class="btn btn-secondary" id="refreshRecordsBtn">
-                        <i>🔄</i> Atualizar
-                    </button>
-                </div>
-                <div class="recent-records-body" id="recentRecordsContainer">
-                    <div class="recent-records-empty">Nenhum registro encontrado</div>
-                </div>
-            </div>
-
-            <!-- Estatísticas do Aluno (aparece quando um aluno é selecionado) -->
-            <div class="student-stats" id="studentStatsCard" style="display: none;">
-                <div class="student-stats-name" id="studentStatsName"></div>
-                <div class="student-stats-value" id="studentOccurrenceCount">0</div>
-                <div class="student-stats-label">ocorrências registradas</div>
-            </div>
-
-            <!-- Estatísticas da Turma (aparece quando uma turma é selecionada) -->
-            <div class="class-stats" id="classStatsCard" style="display: none;">
-                <div class="class-stats-value" id="classStudentCount">0</div>
-                <div class="class-stats-label">Alunos na Turma</div>
-                <div class="class-stats-period" id="classPeriod"></div>
             </div>
         </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-translate="features-title">Recursos da Plataforma</h2>
+                <p data-translate="features-desc">Descubra como nossa plataforma pode transformar sua experiência de aprendizado de inglês</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3 data-translate="feature-1-title">Upload de Materiais</h3>
+                    <p data-translate="feature-1-desc">Professores podem fazer upload de materiais em diversos formatos: PDF, PPT, Word e muito mais.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 data-translate="feature-2-title">Videoaulas Integradas</h3>
+                    <p data-translate="feature-2-desc">Gravação e integração de videoaulas com Wondershare, disponíveis em todos os dispositivos.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 data-translate="feature-3-title">Sistema de Pagamento</h3>
+                    <p data-translate="feature-3-desc">Processamento seguro de pagamentos com emissão automática de nota fiscal.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 data-translate="feature-4-title">Design Responsivo</h3>
+                    <p data-translate="feature-4-desc">Plataforma totalmente responsiva que se adapta a computadores, tablets e smartphones.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 data-translate="feature-5-title">Área do Professor</h3>
+                    <p data-translate="feature-5-desc">Painel exclusivo para professores gerenciarem cursos, materiais e acompanharem alunos.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3 data-translate="feature-6-title">Integração Firebase</h3>
+                    <p data-translate="feature-6-desc">Armazenamento seguro e autenticação através do Firebase do Google.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Firebase Config Section (Admin Only) -->
+    <section class="admin-section" id="adminSection">
+        <div class="container">
+            <h2>Configuração do Firebase</h2>
+            <div class="form-group">
+                <label for="apiKey">Chave API</label>
+                <input type="text" id="apiKey" placeholder="Digite a chave API do Firebase">
+            </div>
+            <div class="form-group">
+                <label for="authDomain">Domínio de Autenticação</label>
+                <input type="text" id="authDomain" placeholder="seu-projeto.firebaseapp.com">
+            </div>
+            <div class="form-group">
+                <label for="projectId">ID do Projeto</label>
+                <input type="text" id="projectId" placeholder="ID do seu projeto no Firebase">
+            </div>
+            <div class="form-group">
+                <label for="storageBucket">Storage Bucket</label>
+                <input type="text" id="storageBucket" placeholder="seu-projeto.appspot.com">
+            </div>
+            <div class="form-group">
+                <label for="messagingSenderId">Messaging Sender ID</label>
+                <input type="text" id="messagingSenderId" placeholder="Seu Messaging Sender ID">
+            </div>
+            <div class="form-group">
+                <label for="appId">ID do App</label>
+                <input type="text" id="appId" placeholder="ID do seu aplicativo">
+            </div>
+            <button class="btn btn-primary">Salvar Configurações</button>
+        </div>
+    </section>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Cadastre-se</h2>
+            <p>Preencha os dados abaixo para criar sua conta</p>
+            
+            <form class="signup-form">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="fullName">Nome Completo</label>
+                        <input type="text" id="fullName" placeholder="Digite seu nome completo" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="phone">Telefone com DDD</label>
+                        <input type="tel" id="phone" placeholder="(11) 99999-9999" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" placeholder="seu@email.com" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" placeholder="Crie uma senha segura" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="confirmPassword">Confirmar Senha</label>
+                        <input type="password" id="confirmPassword" placeholder="Digite novamente sua senha" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="form-submit">Cadastrar</button>
+            </form>
+        </div>
     </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 data-translate="footer-title">RealFluent</h3>
+                    <p data-translate="footer-desc">Plataforma moderna de ensino de inglês com tecnologia de ponta e recursos inovadores.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3 data-translate="footer-links">Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#home" data-translate="nav-home">Início</a></li>
+                        <li><a href="#courses" data-translate="nav-courses">Cursos</a></li>
+                        <li><a href="#features" data-translate="nav-features">Recursos</a></li>
+                        <li><a href="#about" data-translate="nav-about">Sobre Nós</a></li>
+                        <li><a href="#contact" data-translate="nav-contact">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 data-translate="footer-courses">Cursos</h3>
+                    <ul>
+                        <li><a href="#" data-translate="course-basic">Inglês Básico</a></li>
+                        <li><a href="#" data-translate="course-intermediate">Inglês Intermediário</a></li>
+                        <li><a href="#" data-translate="course-advanced">Inglês Avançado</a></li>
+                        <li><a href="#" data-translate="course-business">Inglês para Negócios</a></li>
+                        <li><a href="#" data-translate="course-exam">Preparação para TOEFL/IELTS</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 data-translate="footer-contact">Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> <span data-translate="footer-address">Av. Paulista, 1000, São Paulo</span></li>
+                        <li><i class="fas fa-phone"></i> <span data-translate="footer-phone">(11) 9999-9999</span></li>
+                        <li><i class="fas fa-envelope"></i> <span data-translate="footer-email">contato@realfluent.com</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 RealFluent. <span data-translate="footer-rights">Todos os direitos reservados.</span></p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // =========================================================================
-        // CONFIGURAÇÕES E CONSTANTES
-        // =========================================================================
-        // CORREÇÃO: URL do script atualizada para corresponder ao backend
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuAXKr6Cj9n4ISbQQsHZMg27XSpcu_XT-4q4BWEMF_b60dIuH82nnuyZ1IR9KP_mAf/exec";
-
-        const teacherEmails = {
-            "ALEX LUTH PEREIRA MARANHAO": "luth@prof.educacao.sp.gov.br",
-            "ALEXSANDRA PAULA VARELLA DE SOUZA": "alexsandra.varella@prof.educacao.sp.gov.br",
-            "ALISON VASCONCELOS BESERRA": "alison.beserra@prof.educacao.sp.gov.br",
-            "AMAURI TEODORO DE OLIVEIRA": "amauri.oliveira@prof.educacao.sp.gov.br",
-            "ANA PAULA DOS SANTOS": "ana.santos@prof.educacao.sp.gov.br",
-            "ANDREIA DOS SANTOS FREITAS": "andreia.freitas@prof.educacao.sp.gov.br",
-            "ANDREIA MADUREIRA REIS": "andreia.reis@prof.educacao.sp.gov.br",
-            "ANTONIO CARLOS DE OLIVEIRA": "antonio.oliveira@prof.educacao.sp.gov.br",
-            "ANTONIO RAMOS DE ARAUJO": "antonio.araujo@prof.educacao.sp.gov.br",
-            "ANTONIO WILTON WANDERLEY CABRAL": "antonio.cabral@prof.educacao.sp.gov.br",
-            "AUGUSTO LINO PESSOA NETO": "augusto.neto@prof.educacao.sp.gov.br",
-            "AUREA MARIA DE JESUS MARQUES": "aurea.marques@prof.educacao.sp.gov.br",
-            "CAROLINA PERNOMIAN PARUSSOLO": "carolina.parussolo@prof.educacao.sp.gov.br",
-            "CASSIA OLIVEIRA ANTONIAZI": "cassia.antoniazi@prof.educacao.sp.gov.br",
-            "CLAUDINEIA DE AGUIAR LIMA": "claudineia.lima@prof.educacao.sp.gov.br",
-            "DANIEL DE FREITAS ALMEIDA": "daniel.almeida@prof.educacao.sp.gov.br",
-            "DANIEL LOPES BARBOSA": "daniel.barbosa@prof.educacao.sp.gov.br",
-            "DANIELA FERREIRA LIMA": "daniela.lima@prof.educacao.sp.gov.br",
-            "DANIELLE LUCIA BATISTA DE ALMEIDA": "danielle.almeida@prof.educacao.sp.gov.br",
-            "DEBORA CRISTINA SILVA SANTOS": "debora.santos@prof.educacao.sp.gov.br",
-            "DEBORA MARIA PINTO": "debora.pinto@prof.educacao.sp.gov.br",
-            "DENISE APARECIDA GOMES": "denise.gomes@prof.educacao.sp.gov.br",
-            "DENISE APARECIDA GOMES PEREIRA": "denise.pereira@prof.educacao.sp.gov.br",
-            "EDNA APARECIDA SILVA SANTOS": "edna.santos@prof.educacao.sp.gov.br",
-            "EDSON JOSE PEREIRA": "edson.pereira@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA ALVES": "elaine.alves@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA RODRIGUES": "elaine.rodrigues@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SILVA": "elaine.silva@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SILVA SANTOS": "elaine.santos@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA": "elaine.souza@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA OLIVEIRA": "elaine.oliveira@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA": "elaine.silva@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS": "elaine.santos@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA": "elaine.oliveira@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA": "elaine.pereira@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES": "elaine.rodrigues@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES": "elaine.alves@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES": "elaine.gomes@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA": "elaine.lima@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA": "elaine.batista@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA": "elaine.ferreira@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES": "elaine.lopes@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA": "elaine.barbosa@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO": "elaine.pinto@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA": "elaine.maria@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA": "elaine.aparecida@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE": "elaine.jose@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA": "elaine.lucia@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA": "elaine.cristina@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA": "elaine.silva@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS": "elaine.santos@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA": "elaine.oliveira@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA": "elaine.pereira@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES": "elaine.rodrigues@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES": "elaine.alves@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES": "elaine.gomes@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA": "elaine.lima@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA": "elaine.batista@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA": "elaine.ferreira@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES": "elaine.lopes@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA": "elaine.barbosa@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO": "elaine.pinto@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA": "elaine.maria@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA": "elaine.aparecida@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE": "elaine.jose@prof.educacao.sp.gov.br",
-            "ELAINE CRISTINA SOUZA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA CRISTINA SILVA SANTOS OLIVEIRA PEREIRA RODRIGUES ALVES GOMES LIMA BATISTA FERREIRA LOPES BARBOSA PINTO MARIA APARECIDA JOSE LUCIA": "elaine.lucia@prof.educacao.sp.gov.br",
+        // Translations object
+        const translations = {
+            'pt': {
+                'site-name': 'RealFluent',
+                'teacher-area': 'Área do Professor',
+                'live-class': 'Aula ao Vivo',
+                'nav-home': 'Início',
+                'nav-courses': 'Cursos',
+                'nav-features': 'Recursos',
+                'nav-about': 'Sobre',
+                'nav-contact': 'Contato',
+                'nav-login': 'Entrar',
+                'nav-signup': 'Cadastrar',
+                'hero-title-1': 'Aprenda Inglês de Forma Moderna e Eficiente',
+                'hero-desc-1': 'Nossa plataforma oferece cursos de inglês com tecnologia de ponta, materiais diversificados e suporte completo para seu aprendizado.',
+                'hero-cta-1': 'Explorar Cursos',
+                'hero-title-2': 'Metodologia Inovadora',
+                'hero-desc-2': 'Utilizamos as mais modernas técnicas de ensino para garantir que você atinja a fluência no idioma inglês.',
+                'hero-cta-2': 'Conhecer Métodos',
+                'hero-title-3': 'Professores Qualificados',
+                'hero-desc-3': 'Nossa equipe de professores é altamente capacitada e experiente no ensino de inglês para estrangeiros.',
+                'hero-cta-3': 'Ver Corpo Docente',
+                'courses-title': 'Nossos Cursos',
+                'courses-desc': 'Escolha entre uma variedade de cursos de inglês para todos os níveis',
+                'course-basic': 'Inglês Básico',
+                'course-basic-desc': 'Curso ideal para iniciantes que desejam aprender o fundamento da língua inglesa.',
+                'course-hours': '40 horas',
+                'course-students': '120 alunos',
+                'course-includes': 'Este curso inclui:',
+                'course-basic-item1': 'Gramática básica',
+                'course-basic-item2': 'Vocabulário essencial',
+                'course-basic-item3': 'Expressões do dia a dia',
+                'course-basic-item4': 'Exercícios práticos',
+                'course-learn-more': 'Saiba Mais',
+                'course-access': 'Acessar',
+                'course-intermediate': 'Inglês Intermediário',
+                'course-intermediate-desc': 'Para quem já tem conhecimentos básicos e quer avançar no aprendizado.',
+                'course-intermediate-item1': 'Gramática intermediária',
+                'course-intermediate-item2': 'Conversação fluente',
+                'course-intermediate-item3': 'Leitura e interpretação de textos',
+                'course-intermediate-item4': 'Exercícios avançados',
+                'course-advanced': 'Inglês Avançado',
+                'course-advanced-desc': 'Perfeito para quem busca fluência e domínio completo do idioma.',
+                'course-advanced-item1': 'Gramática avançada',
+                'course-advanced-item2': 'Conversação fluente',
+                'course-advanced-item3': 'Preparação para exames internacionais',
+                'course-advanced-item4': 'Prática de negócios em inglês',
+                'course-basic-tab': 'Inglês Básico',
+                'course-intermediate-tab': 'Inglês Intermediário',
+                'course-advanced-tab': 'Inglês Avançado',
+                'lesson-1': 'Lição 1: Pronomes e Verbo To Be',
+                'lesson-1-desc': 'Aprenda os pronomes pessoais e como usar o verbo to be em inglês.',
+                'pronouns-title': 'Pronomes',
+                'english': 'Inglês',
+                'portuguese': 'Português',
+                'pronoun-i': 'Eu',
+                'pronoun-you': 'Você',
+                'pronoun-we': 'Nós',
+                'pronoun-he': 'Ele',
+                'pronoun-she': 'Ela',
+                'pronoun-it': 'Esta/Aquela/Etc.',
+                'pronoun-they': 'Eles/Elas',
+                'verb-to-be': 'Verbo To Be',
+                'verb-to-be-desc': 'O verbo to be é um dos verbos mais importantes em inglês e significa "ser" ou "estar".',
+                'person': 'Pessoa',
+                'conjugation': 'Conjugação',
+                '1st-person': '1ª pessoa (I)',
+                '2nd-person': '2ª pessoa (You)',
+                '3rd-person': '3ª pessoa (He/She/It)',
+                'plural-you': 'Plural (You/We/They)',
+                'exercise-1': 'Exercício 1: Complete as frases com a forma correta do verbo TO BE',
+                'submit-answers': 'Enviar Respostas',
+                'lesson-2': 'Lição 2: Perguntas e Respostas',
+                'lesson-2-desc': 'Aprenda a formar perguntas e respostas em inglês.',
+                'questions-title': 'Formando Perguntas',
+                'questions-desc': 'Em inglês, para formar perguntas com o verbo TO BE, invertemos a posição do verbo e do sujeito.',
+                'example': 'Exemplo:',
+                'statement': 'Afirmação: You are tall. (Você é alto)',
+                'question': 'Pergunta: Are you tall? (Você é alto?)',
+                'exercise-2': 'Exercício 2: Transforme as afirmações em perguntas',
+                'features-title': 'Recursos da Plataforma',
+                'features-desc': 'Descubra como nossa plataforma pode transformar sua experiência de aprendizado de inglês',
+                'feature-1-title': 'Upload de Materiais',
+                'feature-1-desc': 'Professores podem fazer upload de materiais em diversos formatos: PDF, PPT, Word e muito mais.',
+                'feature-2-title': 'Videoaulas Integradas',
+                'feature-2-desc': 'Gravação e integração de videoaulas com Wondershare, disponíveis em todos os dispositivos.',
+                'feature-3-title': 'Sistema de Pagamento',
+                'feature-3-desc': 'Processamento seguro de pagamentos com emissão automática de nota fiscal.',
+                'feature-4-title': 'Design Responsivo',
+                'feature-4-desc': 'Plataforma totalmente responsiva que se adapta a computadores, tablets e smartphones.',
+                'feature-5-title': 'Área do Professor',
+                'feature-5-desc': 'Painel exclusivo para professores gerenciarem cursos, materiais e acompanharem alunos.',
+                'feature-6-title': 'Integração Firebase',
+                'feature-6-desc': 'Armazenamento seguro e autenticação através do Firebase do Google.',
+                'footer-title': 'RealFluent',
+                'footer-desc': 'Plataforma moderna de ensino de inglês com tecnologia de ponta e recursos inovadores.',
+                'footer-links': 'Links Rápidos',
+                'footer-courses': 'Cursos',
+                'footer-contact': 'Contato',
+                'footer-address': 'Av. Paulista, 1000, São Paulo',
+                'footer-phone': '(11) 9999-9999',
+                'footer-email': 'contato@realfluent.com',
+                'footer-rights': 'Todos os direitos reservados.',
+                'course-business': 'Inglês para Negócios',
+                'course-exam': 'Preparação para TOEFL/IELTS'
+            },
+            'en': {
+                'site-name': 'RealFluent',
+                'teacher-area': 'Teacher Area',
+                'live-class': 'Live Class',
+                'nav-home': 'Home',
+                'nav-courses': 'Courses',
+                'nav-features': 'Features',
+                'nav-about': 'About',
+                'nav-contact': 'Contact',
+                'nav-login': 'Login',
+                'nav-signup': 'Sign Up',
+                'hero-title-1': 'Learn English in a Modern and Effective Way',
+                'hero-desc-1': 'Our platform offers English courses with cutting-edge technology, diverse materials and complete support for your learning.',
+                'hero-cta-1': 'Explore Courses',
+                'hero-title-2': 'Innovative Methodology',
+                'hero-desc-2': 'We use the most modern teaching techniques to ensure you achieve fluency in English.',
+                'hero-cta-2': 'Learn About Methods',
+                'hero-title-3': 'Qualified Teachers',
+                'hero-desc-3': 'Our team of teachers is highly qualified and experienced in teaching English to foreigners.',
+                'hero-cta-3': 'See Teaching Staff',
+                'courses-title': 'Our Courses',
+                'courses-desc': 'Choose from a variety of English courses for all levels',
+                'course-basic': 'Basic English',
+                'course-basic-desc': 'Ideal course for beginners who want to learn the foundation of the English language.',
+                'course-hours': '40 hours',
+                'course-students': '120 students',
+                'course-includes': 'This course includes:',
+                'course-basic-item1': 'Basic grammar',
+                'course-basic-item2': 'Essential vocabulary',
+                'course-basic-item3': 'Everyday expressions',
+                'course-basic-item4': 'Practical exercises',
+                'course-learn-more': 'Learn More',
+                'course-access': 'Access',
+                'course-intermediate': 'Intermediate English',
+                'course-intermediate-desc': 'For those who already have basic knowledge and want to advance their learning.',
+                'course-intermediate-item1': 'Intermediate grammar',
+                'course-intermediate-item2': 'Fluent conversation',
+                'course-intermediate-item3': 'Reading and text interpretation',
+                'course-intermediate-item4': 'Advanced exercises',
+                'course-advanced': 'Advanced English',
+                'course-advanced-desc': 'Perfect for those seeking fluency and complete mastery of the language.',
+                'course-advanced-item1': 'Advanced grammar',
+                'course-advanced-item2': 'Fluent conversation',
+                'course-advanced-item3': 'Preparation for international exams',
+                'course-advanced-item4': 'Business English practice',
+                'course-basic-tab': 'Basic English',
+                'course-intermediate-tab': 'Intermediate English',
+                'course-advanced-tab': 'Advanced English',
+                'lesson-1': 'Lesson 1: Pronouns and Verb To Be',
+                'lesson-1-desc': 'Learn personal pronouns and how to use the verb to be in English.',
+                'pronouns-title': 'Pronouns',
+                'english': 'English',
+                'portuguese': 'Portuguese',
+                'pronoun-i': 'I',
+                'pronoun-you': 'You',
+                'pronoun-we': 'We',
+                'pronoun-he': 'He',
+                'pronoun-she': 'She',
+                'pronoun-it': 'This/That/Etc.',
+                'pronoun-they': 'They',
+                'verb-to-be': 'Verb To Be',
+                'verb-to-be-desc': 'The verb to be is one of the most important verbs in English and means "ser" or "estar".',
+                'person': 'Person',
+                'conjugation': 'Conjugation',
+                '1st-person': '1st person (I)',
+                '2nd-person': '2nd person (You)',
+                '3rd-person': '3rd person (He/She/It)',
+                'plural-you': 'Plural (You/We/They)',
+                'exercise-1': 'Exercise 1: Complete the sentences with the correct form of the verb TO BE',
+                'submit-answers': 'Submit Answers',
+                'lesson-2': 'Lesson 2: Questions and Answers',
+                'lesson-2-desc': 'Learn how to form questions and answers in English.',
+                'questions-title': 'Forming Questions',
+                'questions-desc': 'In English, to form questions with the verb TO BE, we invert the position of the verb and the subject.',
+                'example': 'Example:',
+                'statement': 'Statement: You are tall.',
+                'question': 'Question: Are you tall?',
+                'exercise-2': 'Exercise 2: Turn the statements into questions',
+                'features-title': 'Platform Features',
+                'features-desc': 'Discover how our platform can transform your English learning experience',
+                'feature-1-title': 'Material Upload',
+                'feature-1-desc': 'Teachers can upload materials in various formats: PDF, PPT, Word and more.',
+                'feature-2-title': 'Integrated Video Lessons',
+                'feature-2-desc': 'Recording and integration of video lessons with Wondershare, available on all devices.',
+                'feature-3-title': 'Payment System',
+                'feature-3-desc': 'Secure payment processing with automatic invoice issuance.',
+                'feature-4-title': 'Responsive Design',
+                'feature-4-desc': 'Fully responsive platform that adapts to computers, tablets and smartphones.',
+                'feature-5-title': 'Teacher Area',
+                'feature-5-desc': 'Exclusive panel for teachers to manage courses, materials and monitor students.',
+                'feature-6-title': 'Firebase Integration',
+                'feature-6-desc': 'Secure storage and authentication through Google Firebase.',
+                'footer-title': 'RealFluent',
+                'footer-desc': 'Modern English teaching platform with cutting-edge technology and innovative resources.',
+                'footer-links': 'Quick Links',
+                'footer-courses': 'Courses',
+                'footer-contact': 'Contact',
+                'footer-address': 'Paulista Ave, 1000, São Paulo',
+                'footer-phone': '+55 (11) 9999-9999',
+                'footer-email': 'contact@realfluent.com',
+                'footer-rights': 'All rights reserved.',
+                'course-business': 'Business English',
+                'course-exam': 'TOEFL/IELTS Preparation'
+            }
         };
 
-        // Lista de irregularidades para contagem
-        const irregularityTypes = [
-            "Não fez a lição",
-            "Não trouxe material",
-            "Fora do lugar durante a aula",
-            "Chegou atrasado",
-            "Circulando no corredor",
-            "Uso de celular",
-            "Conversa paralela",
-            "Desrespeito com o professor",
-            "Desrespeito com o colega",
-            "Danificou patrimônio escolar",
-            "Outros"
-        ];
-
-        // =========================================================================
-        // FUNÇÕES DE UTILIDADE
-        // =========================================================================
-
-        // Função para formatar data no padrão DD/MM/YYYY
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('pt-BR');
-        }
-
-        // Função para obter o período a partir do nome da turma
-        function getPeriodFromClassName(className) {
-            if (!className) return null;
+        // Demo functionality for the platform
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial language
+            let currentLang = 'pt';
             
-            const upperClassName = className.toUpperCase();
-            if (upperClassName.includes('MANHA')) return 'Manhã';
-            if (upperClassName.includes('TARDE')) return 'Tarde';
-            if (upperClassName.includes('NOITE')) return 'Noite';
-            return null;
-        }
-
-        // Função para fazer requisições com retry automático
-        async function safeFetch(url, options = {}, maxRetries = 3) {
-            let retries = 0;
+            // Carousel functionality
+            const slides = document.querySelector('.carousel-slides');
+            const slideItems = document.querySelectorAll('.carousel-slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const indicators = document.querySelectorAll('.indicator');
+            let currentIndex = 0;
+            let autoSlideInterval;
             
-            while (retries < maxRetries) {
-                try {
-                    // CORREÇÃO: Adicionando modo 'no-cors' para contornar o problema CORS
-                    options.mode = 'no-cors';
-                    
-                    const response = await fetch(url, options);
-                    
-                    // Como estamos usando no-cors, não podemos ler a resposta
-                    // Vamos assumir que a requisição foi bem-sucedida
-                    return { success: true };
-                } catch (error) {
-                    retries++;
-                    console.error(`Tentativa ${retries} falhou: ${error}`);
-                    
-                    if (retries >= maxRetries) {
-                        throw error;
-                    }
-                    
-                    // Espera um tempo antes de tentar novamente (backoff exponencial)
-                    await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, retries - 1)));
-                }
-            }
-        }
-
-        // =========================================================================
-        // FUNÇÕES DE CARREGAMENTO DE DADOS
-        // =========================================================================
-
-        // Carregar estatísticas por período
-        async function loadPeriodStats() {
-            try {
-                const response = await safeFetch(`${SCRIPT_URL}?action=getPeriodStats`);
+            function updateCarousel() {
+                slides.style.transform = `translateX(-${currentIndex * 100}%)`;
                 
-                // Como estamos usando no-cors, não podemos ler a resposta
-                // Vamos usar valores fixos para demonstração
-                document.getElementById('morningStudents').textContent = '710';
-                document.getElementById('afternoonStudents').textContent = '533';
-                document.getElementById('nightStudents').textContent = '258';
-                
-            } catch (error) {
-                console.error('Erro ao carregar estatísticas por período:', error);
-            }
-        }
-
-        // Carregar estatísticas gerais
-        async function loadGeneralStats() {
-            try {
-                const response = await safeFetch(`${SCRIPT_URL}?action=getGeneralStats`);
-                
-                // Como estamos usando no-cors, não podemos ler a resposta
-                // Vamos usar valores fixos para demonstração
-                document.getElementById('totalOccurrences').textContent = '0';
-                document.getElementById('totalTeachers').textContent = '80';
-                document.getElementById('totalClasses').textContent = '46';
-                document.getElementById('morningOccurrences').textContent = '0';
-                document.getElementById('afternoonOccurrences').textContent = '0';
-                document.getElementById('nightOccurrences').textContent = '0';
-                
-            } catch (error) {
-                console.error('Erro ao carregar estatísticas gerais:', error);
-            }
-        }
-
-        // Carregar registros recentes
-        async function loadRecentOccurrences() {
-            try {
-                const response = await safeFetch(`${SCRIPT_URL}?action=getAllOccurrences`);
-                
-                // Como estamos usando no-cors, não podemos ler a resposta
-                // Vamos mostrar uma mensagem de "Nenhum registro encontrado"
-                const container = document.getElementById('recentRecordsContainer');
-                container.innerHTML = '<div class="recent-records-empty">Nenhum registro encontrado</div>';
-                document.getElementById('recordCount').textContent = '0';
-                
-            } catch (error) {
-                console.error('Erro ao carregar registros recentes:', error);
-            }
-        }
-
-        // Carregar lista de professores
-        function loadTeachers() {
-            const teacherSelect = document.getElementById('teacherName');
-            const teachers = Object.keys(teacherEmails).sort();
-            
-            teachers.forEach(teacher => {
-                const option = document.createElement('option');
-                option.value = teacher;
-                option.textContent = teacher;
-                teacherSelect.appendChild(option);
-            });
-        }
-
-        // Carregar lista de turmas
-        async function loadClasses() {
-            try {
-                const classSelect = document.getElementById('className');
-                
-                // Lista de turmas fixa para demonstração
-                const classes = [
-                    "6° ANO A MANHA", "6° ANO B MANHA", "6° ANO C MANHA", "6° ANO D MANHA",
-                    "6° ANO E TARDE", "6° ANO F TARDE",
-                    "7° ANO A TARDE", "7° ANO B TARDE", "7° ANO C TARDE", "7° ANO D TARDE", "7° ANO E TARDE", "7° ANO F TARDE",
-                    "8° ANO A TARDE", "8° ANO B TARDE", "8° ANO C TARDE", "8° ANO D TARDE", "8° ANO E TARDE",
-                    "9° ANO A TARDE", "9° ANO B TARDE", "9° ANO C TARDE", "9° ANO D TARDE", "9° ANO E TARDE",
-                    "1° SÉRIE A NOITE", "1° SÉRIE B NOITE", "1° SÉRIE C NOITE", "1° SÉRIE D NOITE",
-                    "2° SÉRIE A NOITE", "2° SÉRIE B NOITE", "2° SÉRIE C NOITE",
-                    "3° SÉRIE A NOITE", "3° SÉRIE B NOITE", "3° SÉRIE C NOITE"
-                ];
-                
-                classes.forEach(className => {
-                    const option = document.createElement('option');
-                    option.value = className;
-                    option.textContent = className;
-                    classSelect.appendChild(option);
-                });
-                
-            } catch (error) {
-                console.error('Erro ao carregar turmas:', error);
-            }
-        }
-
-        // Carregar alunos de uma turma específica
-        async function loadStudents(className) {
-            try {
-                const studentSelect = document.getElementById('studentName');
-                studentSelect.innerHTML = '<option value="">Carregando alunos...</option>';
-                
-                // Simular carregamento de alunos
-                setTimeout(() => {
-                    // Lista de alunos fixa para demonstração
-                    const students = [
-                        "BRENO SANTOS DE OLIVEIRA",
-                        "EDUARDO ALVES RIBEIRO SANTOS",
-                        "ESTHER OLIVEIRA DE MACEDO",
-                        "FELIPE TRINDADE QUEIROZ",
-                        "GABRIELY FREITAS DOS ANJOS",
-                        "ISAAC ZANACOLI MATOS AUGUSTO",
-                        "JOAQUIM TESSER GUEDES",
-                        "JÚLIA VELOSO CAMARÇO",
-                        "JULIANA MARTINS DE SOUSA",
-                        "JULIO CEZAR LIMA DE OLIVEIRA",
-                        "KAUA BORGES DE SOUZA",
-                        "KAUANNY LOPES SANTOS",
-                        "KELVIN LUCAS DA SILVA NOGUEIRA",
-                        "KEVYM WILLIAM ALVES",
-                        "LEONARDO SILVEIRA DOS SANTOS",
-                        "LORENA DE MACEDO PEREIRA",
-                        "LORRAYNE VICTORIA RODRIGUES DA SILVA",
-                        "LUARA DINIZ SATURNINO",
-                        "MARIA CLARA SILVA DE JESUS BRITO",
-                        "MARIA EDUARDA ALVES RIBEIRO",
-                        "MARIA EDUARDA SANTOS SILVA",
-                        "MARIA FERNANDA OLIVEIRA SANTOS",
-                        "MARIA JULIA SANTOS SILVA",
-                        "MARIA LUIZA OLIVEIRA SANTOS",
-                        "MARIA VITORIA SANTOS SILVA",
-                        "MARIANA OLIVEIRA SANTOS",
-                        "MATHEUS HENRIQUE SANTOS SILVA",
-                        "MIGUEL SANTOS SILVA",
-                        "PEDRO HENRIQUE SANTOS SILVA",
-                        "RAFAEL SANTOS SILVA",
-                        "SAMUEL SANTOS SILVA",
-                        "SOPHIA SANTOS SILVA",
-                        "VICTOR HUGO SANTOS SILVA",
-                        "VITOR GABRIEL SANTOS SILVA"
-                    ];
-                    
-                    studentSelect.innerHTML = '<option value="">Selecione o aluno</option>';
-                    students.forEach(student => {
-                        const option = document.createElement('option');
-                        option.value = student;
-                        option.textContent = student;
-                        studentSelect.appendChild(option);
-                    });
-                    
-                    // Mostrar estatísticas da turma
-                    const classStatsCard = document.getElementById('classStatsCard');
-                    const classStudentCount = document.getElementById('classStudentCount');
-                    const classPeriod = document.getElementById('classPeriod');
-                    
-                    classStudentCount.textContent = students.length;
-                    classPeriod.textContent = `Período: ${getPeriodFromClassName(className)}`;
-                    classStatsCard.style.display = 'block';
-                    
-                }, 1000);
-                
-            } catch (error) {
-                console.error('Erro ao carregar alunos:', error);
-                const studentSelect = document.getElementById('studentName');
-                studentSelect.innerHTML = '<option value="">Erro ao carregar alunos</option>';
-            }
-        }
-
-        // Carregar estatísticas de um aluno específico
-        async function loadStudentStats(studentName) {
-            try {
-                // Simular carregamento de estatísticas do aluno
-                const studentStatsCard = document.getElementById('studentStatsCard');
-                const studentStatsName = document.getElementById('studentStatsName');
-                const studentOccurrenceCount = document.getElementById('studentOccurrenceCount');
-                
-                studentStatsName.textContent = studentName;
-                studentOccurrenceCount.textContent = '0';
-                studentStatsCard.style.display = 'block';
-                
-            } catch (error) {
-                console.error('Erro ao carregar estatísticas do aluno:', error);
-            }
-        }
-
-        // =========================================================================
-        // FUNÇÕES DE ENVIO DE DADOS
-        // =========================================================================
-
-        // Enviar dados do formulário
-        async function sendFormData(formData) {
-            try {
-                const submitBtn = document.getElementById('submitBtn');
-                const originalBtnText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<div class="spinner"></div> Enviando...';
-                submitBtn.disabled = true;
-                
-                // Preparar dados para envio
-                const data = {
-                    teacherName: formData.get('teacherName'),
-                    teacherEmail: teacherEmails[formData.get('teacherName')] || '',
-                    occurrenceDate: formData.get('occurrenceDate'),
-                    className: formData.get('className'),
-                    studentName: formData.get('studentName'),
-                    irregularities: formData.getAll('irregularities').join(', '),
-                    description: formData.get('description'),
-                    timestamp: new Date().toISOString()
-                };
-                
-                // Enviar dados para o Google Apps Script
-                const response = await safeFetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json'
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
                     }
                 });
-                
-                // Resetar formulário e atualizar estatísticas
-                document.getElementById('occurrenceForm').reset();
-                document.getElementById('studentStatsCard').style.display = 'none';
-                document.getElementById('classStatsCard').style.display = 'none';
-                
-                // Mostrar mensagem de sucesso
-                alert('Ocorrência registrada com sucesso!');
-                
-                // Recarregar estatísticas
-                loadGeneralStats();
-                loadRecentOccurrences();
-                
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
-                
-            } catch (error) {
-                console.error('Erro ao enviar formulário:', error);
-                alert('Erro ao registrar ocorrência. Por favor, tente novamente.');
-                
-                const submitBtn = document.getElementById('submitBtn');
-                submitBtn.innerHTML = '<i>📤</i> Registrar Ocorrência';
-                submitBtn.disabled = false;
             }
-        }
-
-        // =========================================================================
-        // EVENT LISTENERS
-        // =========================================================================
-
-        // Quando o documento estiver pronto
-        document.addEventListener('DOMContentLoaded', () => {
-            // Carregar dados iniciais
-            loadTeachers();
-            loadClasses();
-            loadGeneralStats();
-            loadPeriodStats();
-            loadRecentOccurrences();
             
-            // Configurar data atual no campo de data
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('occurrenceDate').value = today;
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slideItems.length;
+                updateCarousel();
+            }
             
-            // Event listener para mudança de turma
-            document.getElementById('className').addEventListener('change', (e) => {
-                const className = e.target.value;
-                if (className) {
-                    loadStudents(className);
-                } else {
-                    document.getElementById('studentName').innerHTML = '<option value="">Selecione primeiro a turma</option>';
-                    document.getElementById('classStatsCard').style.display = 'none';
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slideItems.length) % slideItems.length;
+                updateCarousel();
+            }
+            
+            nextBtn.addEventListener('click', function() {
+                clearInterval(autoSlideInterval);
+                nextSlide();
+                startAutoSlide();
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                clearInterval(autoSlideInterval);
+                prevSlide();
+                startAutoSlide();
+            });
+            
+            // Add click events to indicators
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', function() {
+                    clearInterval(autoSlideInterval);
+                    currentIndex = parseInt(this.getAttribute('data-index'));
+                    updateCarousel();
+                    startAutoSlide();
+                });
+            });
+            
+            // Auto-advance carousel
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(nextSlide, 5000);
+            }
+            
+            startAutoSlide();
+            
+            // Language toggle
+            const ptBtn = document.getElementById('ptBtn');
+            const enBtn = document.getElementById('enBtn');
+            
+            ptBtn.addEventListener('click', function() {
+                if (currentLang !== 'pt') {
+                    currentLang = 'pt';
+                    updateLanguage();
+                    ptBtn.classList.add('active');
+                    enBtn.classList.remove('active');
                 }
             });
             
-            // Event listener para mudança de aluno
-            document.getElementById('studentName').addEventListener('change', (e) => {
-                const studentName = e.target.value;
-                if (studentName) {
-                    loadStudentStats(studentName);
-                } else {
-                    document.getElementById('studentStatsCard').style.display = 'none';
+            enBtn.addEventListener('click', function() {
+                if (currentLang !== 'en') {
+                    currentLang = 'en';
+                    updateLanguage();
+                    enBtn.classList.add('active');
+                    ptBtn.classList.remove('active');
                 }
             });
             
-            // Event listener para o botão de atualizar registros
-            document.getElementById('refreshRecordsBtn').addEventListener('click', () => {
-                loadRecentOccurrences();
+            // Update page language
+            function updateLanguage() {
+                const elements = document.querySelectorAll('[data-translate]');
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (translations[currentLang][key]) {
+                        element.textContent = translations[currentLang][key];
+                    }
+                });
+            }
+            
+            // Video player close button
+            const videoClose = document.querySelector('.video-close');
+            const videoPlayer = document.querySelector('.video-player');
+            videoClose.addEventListener('click', function() {
+                videoPlayer.style.display = 'none';
             });
             
-            // Event listener para o checkbox "Outros"
-            document.getElementById('irregularity11').addEventListener('change', (e) => {
-                const descriptionField = document.getElementById('description');
-                if (e.target.checked) {
-                    descriptionField.setAttribute('required', 'required');
+            // Demo admin button
+            const demoAdminBtn = document.getElementById('demoAdminBtn');
+            const adminSection = document.getElementById('adminSection');
+            
+            demoAdminBtn.addEventListener('click', function() {
+                if (adminSection.style.display === 'block') {
+                    adminSection.style.display = 'none';
+                    demoAdminBtn.textContent = translations[currentLang]['teacher-area'];
                 } else {
-                    descriptionField.removeAttribute('required');
+                    adminSection.style.display = 'block';
+                    demoAdminBtn.textContent = translations[currentLang]['teacher-area-close'] || 'Close Teacher Area';
+                    // Scroll to admin section
+                    adminSection.scrollIntoView({behavior: 'smooth'});
                 }
             });
             
-            // Event listener para envio do formulário
-            document.getElementById('occurrenceForm').addEventListener('submit', async (e) => {
+            // Course card hover effect
+            const courseCards = document.querySelectorAll('.course-card');
+            courseCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.03)';
+                    this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.05)';
+                });
+            });
+            
+            // Access button functionality
+            const accessButtons = document.querySelectorAll('.access-btn');
+            const detailsButtons = document.querySelectorAll('.details-btn');
+            
+            accessButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const courseType = this.getAttribute('data-course');
+                    
+                    // Hide access button and show details button
+                    this.style.display = 'none';
+                    const detailsBtn = this.nextElementSibling;
+                    detailsBtn.style.display = 'block';
+                    
+                    // Show course details
+                    const courseCard = this.closest('.course-card');
+                    const courseDetails = courseCard.querySelector('.course-details');
+                    courseDetails.style.display = 'block';
+                    
+                    // Scroll to course details
+                    courseDetails.scrollIntoView({behavior: 'smooth', block: 'start'});
+                });
+            });
+            
+            // Details button functionality
+            detailsButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const courseCard = this.closest('.course-card');
+                    const courseDetails = courseCard.querySelector('.course-details');
+                    
+                    // Toggle course details visibility
+                    if (courseDetails.style.display === 'block') {
+                        courseDetails.style.display = 'none';
+                    } else {
+                        courseDetails.style.display = 'block';
+                        courseDetails.scrollIntoView({behavior: 'smooth', block: 'start'});
+                    }
+                });
+            });
+            
+            // Signup modal functionality
+            const signupBtn = document.getElementById('signupBtn');
+            const signupModal = document.getElementById('signupModal');
+            const closeSignupModal = signupModal.querySelector('.close-modal');
+            
+            signupBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                signupModal.style.display = 'flex';
+            });
+            
+            closeSignupModal.addEventListener('click', function() {
+                signupModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === signupModal) {
+                    signupModal.style.display = 'none';
+                }
+            });
+            
+            // Signup form submission
+            const signupForm = document.querySelector('.signup-form');
+            signupForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Validar formulário
-                const form = e.target;
-                if (!form.checkValidity()) {
+                // Basic validation
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    alert('As senhas não coincidem!');
                     return;
                 }
                 
-                // Verificar se pelo menos uma irregularidade foi selecionada ou há descrição
-                const irregularities = form.querySelectorAll('input[name="irregularities"]:checked');
-                const description = form.querySelector('#description').value.trim();
-                
-                if (irregularities.length === 0 && description === '') {
-                    alert('Por favor, selecione pelo menos uma irregularidade ou forneça uma descrição.');
-                    return;
-                }
-                
-                // Enviar dados do formulário
-                const formData = new FormData(form);
-                await sendFormData(formData);
+                // Form submission logic would go here
+                alert('Cadastro realizado com sucesso! Em breve você receberá um e-mail de confirmação.');
+                signupModal.style.display = 'none';
+            });
+            
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active tab button
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding tab pane
+                    tabPanes.forEach(pane => {
+                        pane.classList.remove('active');
+                        if (pane.id === tabId) {
+                            pane.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Exercise submission
+            const submitButtons = document.querySelectorAll('.submit-btn');
+            
+            submitButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const exercise = this.closest('.exercise');
+                    const inputs = exercise.querySelectorAll('.exercise-input');
+                    let allCorrect = true;
+                    
+                    inputs.forEach(input => {
+                        const answer = input.getAttribute('data-answer').toLowerCase();
+                        const userAnswer = input.value.toLowerCase().trim();
+                        
+                        if (userAnswer === answer) {
+                            input.style.borderColor = 'green';
+                        } else {
+                            input.style.borderColor = 'red';
+                            allCorrect = false;
+                        }
+                    });
+                    
+                    if (allCorrect) {
+                        alert('Parabéns! Todas as respostas estão corretas.');
+                    } else {
+                        alert('Algumas respostas estão incorretas. Tente novamente.');
+                    }
+                });
             });
         });
     </script>
 </body>
 </html>
-
